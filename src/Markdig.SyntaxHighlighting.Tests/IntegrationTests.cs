@@ -1,17 +1,16 @@
 ﻿using Markdig;
 
-using System;
-
 using Xunit;
 
-namespace MDS.Markdig.SyntaxHighlighting.Tests
-{
-    public class IntegrationTests
-    {
+namespace MDS.Markdig.SyntaxHighlighting.Tests;
 
-        [Fact]
-        public void ShouldUseDefaultRendererIfLanguageIsNotIndicated() {
-            string testString = @"
+public class IntegrationTests
+{
+
+    [Fact]
+    public void ShouldUseDefaultRendererIfLanguageIsNotIndicated()
+    {
+        string testString = @"
 # This is a test
 
 ```
@@ -19,20 +18,20 @@ namespace MDS.Markdig.SyntaxHighlighting.Tests
     ""jsonProperty"": 1
 }
 ```";
-            var pipeline = new MarkdownPipelineBuilder()
-                .UseAdvancedExtensions()
-                .UseSyntaxHighlighting()
-                .Build();
-            var html = Markdown.ToHtml(testString, pipeline);
-            Assert.Contains("<pre><code>", html);
-            Assert.Contains("jsonProperty", html);
-            Assert.DoesNotContain("lang-", html);
-        }
+        var pipeline = new MarkdownPipelineBuilder()
+            .UseAdvancedExtensions()
+            .UseSyntaxHighlighting()
+            .Build();
+        var html = Markdown.ToHtml(testString, pipeline);
+        Assert.Contains("<pre><code>", html);
+        Assert.Contains("jsonProperty", html);
+        Assert.DoesNotContain("lang-", html);
+    }
 
-        [Fact]
-        public void ShouldColorizeSyntaxWhenLanguageIsIndicated()
-        {
-            string testString = @"
+    [Fact]
+    public void ShouldColorizeSyntaxWhenLanguageIsIndicated()
+    {
+        string testString = @"
 # This is a test
 
 ```json
@@ -40,15 +39,14 @@ namespace MDS.Markdig.SyntaxHighlighting.Tests
     ""jsonProperty"": 1
 }
 ```";
-            var pipeline = new MarkdownPipelineBuilder()
-                .UseAdvancedExtensions()
-                .UseSyntaxHighlighting()
-                .Build();
-            var html = Markdown.ToHtml(testString, pipeline);
-            Assert.Contains("<div", html);
-            Assert.Contains("jsonProperty", html);
-            Assert.Contains("lang-", html);
-        }
-
+        var pipeline = new MarkdownPipelineBuilder()
+            .UseAdvancedExtensions()
+            .UseSyntaxHighlighting()
+            .Build();
+        var html = Markdown.ToHtml(testString, pipeline);
+        Assert.Contains("<div", html);
+        Assert.Contains("jsonProperty", html);
+        Assert.Contains("lang-", html);
     }
+
 }
